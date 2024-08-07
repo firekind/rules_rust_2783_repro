@@ -1,0 +1,18 @@
+load("@crates//:defs.bzl", "all_crate_deps")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_shared_library")
+
+rust_library(
+    name = "mycrate",
+    srcs = glob(
+        [
+            "src/**/*.rs",
+        ],
+        allow_empty = False,
+    ),
+    proc_macro_deps = all_crate_deps(
+        proc_macro = True,
+    ),
+    deps = all_crate_deps(
+        normal = True,
+    ),
+)

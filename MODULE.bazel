@@ -1,0 +1,29 @@
+module(
+    name = "repro_2783",
+)
+
+bazel_dep(name = "rules_rust", version = "0.49.1")
+
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2021",
+    extra_target_triples = [
+        "aarch64-unknown-linux-gnu",
+        "x86_64-unknown-linux-gnu",
+    ],
+    versions = [
+        "1.77.2",
+    ],
+)
+use_repo(rust, "rust_toolchains")
+
+crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
+crate.from_cargo(
+    cargo_lockfile = "//:Cargo.lock",
+    manifests = [
+        "//:Cargo.toml",
+        "//mycrate:Cargo.toml",
+        "//mycrate-proc-macro:Cargo.toml",
+    ],
+)
+use_repo(crate, "crates")
