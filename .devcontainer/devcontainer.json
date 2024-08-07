@@ -1,0 +1,6 @@
+{
+    "name": "2783_repro",
+    "build": {
+        "dockerfile": "Dockerfile"
+    }
+}
